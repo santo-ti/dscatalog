@@ -1,6 +1,6 @@
 package com.kti.dscatalog.controllers.exceptions;
 
-import com.kti.dscatalog.services.exceptions.EntityNotFoundException;
+import com.kti.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,8 +12,8 @@ import java.time.Instant;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException exception, HttpServletRequest request) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException exception, HttpServletRequest request) {
         StandardError error = new StandardError(Instant.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Resource not found",
