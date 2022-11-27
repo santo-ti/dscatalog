@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_category")
 public class Category implements Serializable {
-    private static final long serialVersionUID = 1688451520498110473L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,11 +79,11 @@ public class Category implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id.equals(category.id) && Objects.equals(name, category.name);
+        return id.equals(category.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 }
