@@ -21,14 +21,14 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
         Page<Category> list = repository.findAll(pageRequest);
-
         return list.map(CategoryDTO::new);
     }
 
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
-        return new CategoryDTO(repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Entity not found")));
+        Category entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new CategoryDTO(entity);
     }
 
     @Transactional
@@ -40,9 +40,7 @@ public class CategoryService {
 
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Id not found " + id);
-        }
+        verifyExistsById(id);
         Category entity = repository.getReferenceById(id);
         entity.setName(dto.getName());
         entity = repository.save(entity);
@@ -50,13 +48,17 @@ public class CategoryService {
     }
 
     public void delete(Long id) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Id not found " + id);
-        }
+        verifyExistsById(id);
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException exception) {
             throw new DatabaseException("Integrity violation");
+        }
+    }
+
+    private void verifyExistsById(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Id not found " + id);
         }
     }
 }

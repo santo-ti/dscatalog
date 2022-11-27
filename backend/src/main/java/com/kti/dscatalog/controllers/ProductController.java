@@ -28,10 +28,11 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                     @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
-                                                     @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-                                                     @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+    public ResponseEntity<Page<ProductDTO>> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
     ) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction.toUpperCase()), orderBy);
 

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
+		<version>2.7.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -14,7 +14,7 @@
 	<artifactId>dscatalog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DSCatalog</name>
-	<description>DSCatalog DevSuperior</description>
+	<description>DSCatalog Bootcamp DevSuperior</description>
 
 	<properties>
 		<java.version>11</java.version>

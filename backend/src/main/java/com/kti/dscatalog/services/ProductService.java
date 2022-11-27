@@ -26,7 +26,6 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
         Page<Product> list = repository.findAll(pageRequest);
-
         return list.map(ProductDTO::new);
     }
 
@@ -47,9 +46,7 @@ public class ProductService {
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Id not found " + id);
-        }
+        verifyExistsById(id);
         Product entity = repository.getReferenceById(id);
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
@@ -57,9 +54,7 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Id not found " + id);
-        }
+        verifyExistsById(id);
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException exception) {
@@ -83,5 +78,11 @@ public class ProductService {
             Category category = categoryRepository.getReferenceById(categoryId);
             entity.getCategories().add(category);
         });
+    }
+
+    private void verifyExistsById(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
     }
 }
